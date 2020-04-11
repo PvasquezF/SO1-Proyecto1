@@ -7,7 +7,6 @@ extern crate serde_json;
 
 use std::collections::HashMap;
 use rouille::Response;
-use rouille::Router;
 use rouille::router;
 use serde_json::value::{to_value, Value};
 use std::error::Error;
