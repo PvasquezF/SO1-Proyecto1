@@ -47,20 +47,20 @@ fn main() {
                 (GET) (/) => {
                     // If the request's URL is `/`, we jump here.
                     // This block builds a `Response` object that redirects to the `/hello/world`.
-                    
-                    // match TEMPLATES.render("users/profile.html", &context) {
-                    //     let res = "".to_string();
-                    //     Ok(s) => { res.push_str(&s); println!("{:?}", s)},
-                    //     Err(e) => {
-                    //         println!("Error: {}", e);
-                    //         let mut cause = e.source();
-                    //         while let Some(e) = cause {
-                    //             println!("Reason: {}", e);
-                    //             cause = e.source();
-                    //         }
-                    //     }
-                    // };
-                    rouille::Response::redirect_302("/hello/world")
+                    let mut res = "".to_string(); 
+                    match TEMPLATES.render("users/profile.html", &context) {
+                        Ok(s) => { res.push_str(&s); println!("{:?}", s)},
+                        Err(e) => {
+                            println!("Error: {}", e);
+                            let mut cause = e.source();
+                            while let Some(e) = cause {
+                                println!("Reason: {}", e);
+                                cause = e.source();
+                            }
+                        }
+                    };
+                    Response::html(&res);
+                    // rouille::Response::redirect_302("/hello/world")
                 },
     
                 (GET) (/hello/world) => {
@@ -68,7 +68,7 @@ fn main() {
                     println!("hello world");
     
                     // Builds a `Response` object that contains the "hello world" text.
-                    rouille::Response::text(get_random(start=0, end=10))
+                    rouille::Response::text("holi")
                 },
     
                 (GET) (/panic) => {
