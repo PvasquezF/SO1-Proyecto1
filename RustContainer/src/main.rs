@@ -41,24 +41,24 @@ fn main() {
     // A one off template
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
-    match TEMPLATES.render("users/profile.html", &context) {
-        let res = "".to_string();
-        Ok(s) => { res.push_str(&s); println!("{:?}", s)},
-        Err(e) => {
-            println!("Error: {}", e);
-            let mut cause = e.source();
-            while let Some(e) = cause {
-                println!("Reason: {}", e);
-                cause = e.source();
-            }
-        }
-    };
-
     rouille::start_server("0.0.0.0:8888", move|_request|{
             router!(request,
                 (GET) (/) => {
                     // If the request's URL is `/`, we jump here.
                     // This block builds a `Response` object that redirects to the `/hello/world`.
+                    
+                    // match TEMPLATES.render("users/profile.html", &context) {
+                    //     let res = "".to_string();
+                    //     Ok(s) => { res.push_str(&s); println!("{:?}", s)},
+                    //     Err(e) => {
+                    //         println!("Error: {}", e);
+                    //         let mut cause = e.source();
+                    //         while let Some(e) = cause {
+                    //             println!("Reason: {}", e);
+                    //             cause = e.source();
+                    //         }
+                    //     }
+                    // };
                     rouille::Response::redirect_302("/hello/world")
                 },
     
