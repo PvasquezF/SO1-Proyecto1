@@ -112,7 +112,7 @@ func (client *redisClient) setKey(key string, value interface{}, expiration time
 }
 
 func getData() Data {
-	response, err := http.Get("http://localhost:8080/")
+	response, err := http.Get("http://35.208.41.153:8080/")
 
 	if err != nil {
 		fmt.Print(err.Error())
