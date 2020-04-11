@@ -1,14 +1,28 @@
 # Start by building the application.
 FROM golang:1.13-buster as build
 
-WORKDIR /go/src/app
-ADD . /go/src/app
+# Move to working directory /build
+WORKDIR /build
 
-RUN go get -d -v ./...
+# Copy and download dependency using go mod
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
 
-RUN go build -o /go/bin/app
+# Copy the code into the container
+COPY . .
 
-# Now copy it into our base image.
-FROM gcr.io/distroless/base-debian10
-COPY --from=build /go/bin/app /
-CMD ["/app"]
+# Build the application
+RUN go build -o main .
+
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
+
+# Copy binary from build to main folder
+RUN cp /build/main .
+
+# Export necessary port
+EXPOSE 3000
+
+# Command to run when starting the container
+CMD ["/dist/main"]
