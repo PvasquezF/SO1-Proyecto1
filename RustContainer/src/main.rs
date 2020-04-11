@@ -61,7 +61,7 @@ fn main() {
                     };
                     Response::html(&res);
                     // rouille::Response::redirect_302("/hello/world")
-                },
+                }
     
                 //(GET) (/hello/world) => {
                 //    // If the request's URL is `/hello/world`, we jump here.
