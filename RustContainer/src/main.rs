@@ -49,20 +49,20 @@ fn main() {
                         // This block builds a `Response` object that redirects to the `/hello/world`.
                         // If the request's URL is `/`, we jump here.
                         //// This block builds a `Response` object that redirects to the `/hello/world`.
-                        //let mut res = "".to_string(); 
-                        //match TEMPLATES.render("users/profile.html", &context) {
-                        //    Ok(s) => { res.push_str(&s); println!("{:?}", s)},
-                        //    Err(e) => {
-                        //        println!("Error: {}", e);
-                        //        let mut cause = e.source();
-                        //        while let Some(e) = cause {
-                        //            println!("Reason: {}", e);
-                        //            cause = e.source();
-                        //        }
-                        //    }
-                        //};
-                        //Response::html(&res);
-                        rouille::Response::text("/hello/world")
+                        let mut res = "".to_string(); 
+                        match TEMPLATES.render("users/profile.html", &context) {
+                            Ok(s) => { res.push_str(&s); println!("{:?}", s)},
+                            Err(e) => {
+                                println!("Error: {}", e);
+                                let mut cause = e.source();
+                                while let Some(e) = cause {
+                                    println!("Reason: {}", e);
+                                    cause = e.source();
+                                }
+                            }
+                        };
+                        rouille::Response::html(&res);
+                        //rouille::Response::text("/hello/world")
                     },
         
                     (GET) (/hello/world) => {
