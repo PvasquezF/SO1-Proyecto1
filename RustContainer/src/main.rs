@@ -12,10 +12,12 @@ fn main() {
     rouille::start_server("localhost:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
-                html! {
-                    h1 { "Hello, " (name) "!" }
-                    p { "Nice to meet you!" }
-                }
+                let name = "Lyra";
+                let markup = html! {
+                    p { "Hi, " (name) "!" }
+                };
+                println!("{}", markup.into_string());
+                
             },
             _ => Response::empty_404()
         )
