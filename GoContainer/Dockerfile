@@ -1,28 +1,27 @@
-# Start by building the application.
-FROM golang:1.13-buster as build
+FROM golang:1.13-buster as build-env
+#FROM golang:1.8.7-alpine3.6 as build-env
+#RUN apk update
+#RUN apk add git
 
-# Move to working directory /build
-WORKDIR /build
+#WORKDIR /go/src/github.com/go-redis/redis/
+#RUN git clone https://github.com/go-redis/redis.git .
+#RUN git checkout v6
 
-# Copy and download dependency using go mod
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
+#WORKDIR /go/src/github.com/mackerelio/
+#RUN git clone https://github.com/mackerelio/go-osstat
 
-# Copy the code into the container
-COPY . .
+WORKDIR /go/src/app
+ADD . /go/src/app
 
-# Build the application
-RUN go build -o main .
+RUN go get -d -v ./...
 
-# Move to /dist directory as the place for resulting binary folder
-WORKDIR /dist
+RUN go build -o /go/bin/app
 
-# Copy binary from build to main folder
-RUN cp /build/main .
+#FROM gcr.io/distroless/base
+#COPY --from=build-env /go/bin/app /
+#CMD ["/go/bin/app"]
 
-# Export necessary port
-EXPOSE 8081
-
-# Command to run when starting the container
-CMD ["/dist/main"]
+FROM gcr.io/distroless/base-debian10
+COPY --from=build-env /go/bin/app /
+COPY --from=build-env /go/src/app /
+CMD ["/app"]
