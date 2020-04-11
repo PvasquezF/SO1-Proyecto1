@@ -41,8 +41,8 @@ fn main() {
     // A one off template
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
+    let res = ""
     match TEMPLATES.render("users/profile.html", &context) {
-        let res = ""
         Ok(s) => res = res + s,
         Err(e) => {
             println!("Error: {}", e);
@@ -52,8 +52,8 @@ fn main() {
                 cause = e.source();
             }
         }
-        rouille::start_server("0.0.0.0:8888", move |_request| {
-            Response::html(res)
-        });
     };
+            rouille::start_server("0.0.0.0:8888", move |_request| {
+                Response::html(res)
+            });
 }
