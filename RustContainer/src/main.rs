@@ -54,7 +54,7 @@ fn main() {
                             Ok(s) => { rouille::Response::html(&s); res.push_str(&s); println!("{:?}", s);},
                             Err(e) => {
                                 println!("Error: {}", e);
-                                rouille::Response::html(e);
+                                rouille::Response::html("error");
                                 let mut cause = e.source();
                                 while let Some(e) = cause {
                                     println!("Reason: {}", e);
