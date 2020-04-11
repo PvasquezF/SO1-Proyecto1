@@ -1,5 +1,5 @@
-#![feature(proc_macro_non_items)]
-#![feature(use_extern_macros)]
+// #![feature(proc_macro_non_items)]
+// #![feature(use_extern_macros)]
 
 extern crate maud;
 #[macro_use] extern crate rouille;
