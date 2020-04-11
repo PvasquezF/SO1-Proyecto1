@@ -1,11 +1,12 @@
 #[macro_use]
 extern crate tera;
+extern crate rouille;
 #[macro_use]
 extern crate lazy_static;
 extern crate serde_json;
 
 use std::collections::HashMap;
-
+use rouille::Response;
 use serde_json::value::{to_value, Value};
 use std::error::Error;
 use tera::{Context, Result, Tera};
@@ -41,7 +42,8 @@ fn main() {
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
     match TEMPLATES.render("users/profile.html", &context) {
-        Ok(s) => println!("{:?}", s),
+        let res = ""
+        Ok(s) => res = res + s,
         Err(e) => {
             println!("Error: {}", e);
             let mut cause = e.source();
@@ -50,5 +52,8 @@ fn main() {
                 cause = e.source();
             }
         }
+        rouille::start_server("0.0.0.0:8888", move |_request| {
+            Response::html(res)
+        });
     };
 }
