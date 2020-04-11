@@ -92,17 +92,17 @@ fn main() {
                     rouille::Response::empty_400()
                 },
     
-                (GET) (/{id: String}) => {
-                    // If the request's URL is for example `/foo`, we jump here.
-                    //
-                    // This route is similar to the previous one, but this time we have a `String`.
-                    // Parsing into a `String` never fails.
-                    println!("String {:?}", id);
-    
-                    // Builds a `Response` object that contains "hello, " followed with the value
-                    // of `id`.
-                    rouille::Response::text(format!("hello, {}", id))
-                },
+                // (GET) (/{id: String}) => {
+                //     // If the request's URL is for example `/foo`, we jump here.
+                //     //
+                //     // This route is similar to the previous one, but this time we have a `String`.
+                //     // Parsing into a `String` never fails.
+                //     println!("String {:?}", id);
+    // 
+                //     // Builds a `Response` object that contains "hello, " followed with the value
+                //     // of `id`.
+                //     rouille::Response::text(format!("hello, {}", id))
+                // },
     
                 // The code block is called if none of the other blocks matches the request.
                 // We return an empty response with a 404 status code.
