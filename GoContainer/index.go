@@ -26,8 +26,8 @@ type Data struct {
 
 // RAM struct
 type RAM struct {
-	Total string `json:"total"`
-	Usage int64  `json:"usage"`
+	Total string  `json:"total"`
+	Usage float64 `json:"usage"`
 }
 
 // CPU struct
@@ -69,7 +69,7 @@ func showPage(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("layout.html")
 	responseObject := getData()
 	v1 := time.Now().Format("01-02-2006 15:04:05")
-	v2 := strconv.FormatInt(responseObject.Ram.Usage, 10)
+	v2 := strconv.FormatFloat(responseObject.Ram.Usage, 'E', -1, 64)
 	data.Times[index] = v1
 	data.Values[index] = v2
 	index = index + 1
@@ -79,6 +79,7 @@ func showPage(w http.ResponseWriter, r *http.Request) {
 
 	redisClient := initialize()
 	key1 := "ram"
+	print(responseObject.Ram.Usage)
 	value1 := RedisData{Valor: v2, Tiempo: v1}
 	err := redisClient.setKey(key1, value1, time.Minute*1)
 	if err != nil {
