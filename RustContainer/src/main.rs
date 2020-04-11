@@ -1,49 +1,54 @@
-// Updated example from http://rosettacode.org/wiki/Hello_world/Web_server#Rust
-// to work with Rust 1.0 beta
+#[macro_use]
+extern crate tera;
+#[macro_use]
+extern crate lazy_static;
+extern crate serde_json;
 
-use std::net::{TcpStream, TcpListener};
-use std::io::{Read, Write};
-use std::thread;
+use std::collections::HashMap;
 
+use serde_json::value::{to_value, Value};
+use std::error::Error;
+use tera::{Context, Result, Tera};
 
-fn handle_read(mut stream: &TcpStream) {
-    let mut buf = [0u8 ;4096];
-    match stream.read(&mut buf) {
-        Ok(_) => {
-            let req_str = String::from_utf8_lossy(&buf);
-            println!("{}", req_str);
-            },
-        Err(e) => println!("Unable to read stream: {}", e),
-    }
+lazy_static! {
+    pub static ref TEMPLATES: Tera = {
+        let mut tera = match Tera::new("templates/**/*") {
+            Ok(t) => t,
+            Err(e) => {
+                println!("Parsing error(s): {}", e);
+                ::std::process::exit(1);
+            }
+        };
+        tera.autoescape_on(vec!["html", ".sql"]);
+        tera.register_filter("do_nothing", do_nothing_filter);
+        tera
+    };
 }
 
-fn handle_write(mut stream: TcpStream) {
-    let response = b"HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n<html><body>Hello world</body></html>\r\n";
-    match stream.write(response) {
-        Ok(_) => println!("Response sent"),
-        Err(e) => println!("Failed sending response: {}", e),
-    }
-}
-
-fn handle_client(stream: TcpStream) {
-    handle_read(&stream);
-    handle_write(stream);
+pub fn do_nothing_filter(value: &Value, _: &HashMap<String, Value>) -> Result<Value> {
+    let s = try_get_value!("do_nothing_filter", "value", String, value);
+    Ok(to_value(&s).unwrap())
 }
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:8082").unwrap();
-    println!("Listening for connections on port {}", 8080);
+    let mut context = Context::new();
+    context.insert("username", &"Bob");
+    context.insert("numbers", &vec![1, 2, 3]);
+    context.insert("show_all", &false);
+    context.insert("bio", &"<script>alert('pwnd');</script>");
 
-    for stream in listener.incoming() {
-        match stream {
-            Ok(stream) => {
-                thread::spawn(|| {
-                    handle_client(stream)
-                });
-            }
-            Err(e) => {
-                println!("Unable to connect: {}", e);
+    // A one off template
+    Tera::one_off("hello", &Context::new(), true).unwrap();
+
+    match TEMPLATES.render("users/profile.html", &context) {
+        Ok(s) => println!("{:?}", s),
+        Err(e) => {
+            println!("Error: {}", e);
+            let mut cause = e.source();
+            while let Some(e) = cause {
+                println!("Reason: {}", e);
+                cause = e.source();
             }
         }
-    }
+    };
 }
