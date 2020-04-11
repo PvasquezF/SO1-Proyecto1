@@ -12,6 +12,7 @@ categories = ["template-engine"]
 edition = "2018"
 
 [dependencies]
+tera = "1"
 globwalk = "0.8"
 serde = "1.0"
 serde_json = "1.0"
