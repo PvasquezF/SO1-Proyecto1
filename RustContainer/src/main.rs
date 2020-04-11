@@ -10,7 +10,7 @@ use rouille::Response;
 use serde_json::value::{to_value, Value};
 use std::error::Error;
 use tera::{Context, Result, Tera};
-
+use router::Router;
 lazy_static! {
     pub static ref TEMPLATES: Tera = {
         let mut tera = match Tera::new("templates/**/*") {
