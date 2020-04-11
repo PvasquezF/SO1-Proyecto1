@@ -68,7 +68,7 @@ fn main() {
                     println!("hello world");
     
                     // Builds a `Response` object that contains the "hello world" text.
-                    rouille::Response::text("hello world")
+                    rouille::Response::text(get_random(start=0, end=10))
                 },
     
                 (GET) (/panic) => {
