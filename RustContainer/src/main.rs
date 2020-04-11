@@ -38,29 +38,29 @@ fn main() {
     rouille::start_server("0.0.0.0:8888", move|request|{
                 router!(request,
                     (GET) (/) => {
-                        let mut context = Context::new();
-                        context.insert("username", &"Bob");
-                        context.insert("numbers", &vec![1, 2, 3]);
-                        context.insert("show_all", &false);
-                        context.insert("bio", &"<script>alert('pwnd');</script>");
-                    
-                        // A one off template
-                        Tera::one_off("hello", &Context::new(), true).unwrap();
-                        let mut res = "".to_string(); 
-                        match TEMPLATES.render("users/profile.html", &context) {
-                            Ok(s) => { rouille::Response::html(&s); res.push_str(&s); println!("{:?}", s);},
-                            Err(e) => {
-                                println!("Error: {}", e);
-                                rouille::Response::html("error");
-                                let mut cause = e.source();
-                                while let Some(e) = cause {
-                                    println!("Reason: {}", e);
-                                    cause = e.source();
-                                }
-                            }
-                        };
+                        //let mut context = Context::new();
+                        //context.insert("username", &"Bob");
+                        //context.insert("numbers", &vec![1, 2, 3]);
+                        //context.insert("show_all", &false);
+                        //context.insert("bio", &"<script>alert('pwnd');</script>");
+                    //
+                        //// A one off template
+                        //Tera::one_off("hello", &Context::new(), true).unwrap();
+                        //let mut res = "".to_string(); 
+                        //match TEMPLATES.render("users/profile.html", &context) {
+                        //    Ok(s) => { rouille::Response::html(&s); res.push_str(&s); println!("{:?}", s);},
+                        //    Err(e) => {
+                        //        println!("Error: {}", e);
+                        //        rouille::Response::html("error");
+                        //        let mut cause = e.source();
+                        //        while let Some(e) = cause {
+                        //            println!("Reason: {}", e);
+                        //            cause = e.source();
+                        //        }
+                        //    }
+                        //};
                         
-                        //rouille::Response::text("/hello/world")
+                        rouille::Response::text("/hello/world")
                     },
         
                     (GET) (/hello/world) => {
