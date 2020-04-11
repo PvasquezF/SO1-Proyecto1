@@ -62,7 +62,7 @@ fn main() {
                         //    }
                         //};
                         //Response::html(&res);
-                        rouille::Response::redirect_302("/hello/world")
+                        rouille::Response::text("/hello/world")
                     },
         
                     (GET) (/hello/world) => {
