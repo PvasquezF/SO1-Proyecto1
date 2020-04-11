@@ -42,7 +42,7 @@ fn main() {
     // A one off template
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
-    rouille::start_server("0.0.0.0:8888", move|_request|{
+    rouille::start_server("0.0.0.0:8888", move|request|{
             router!(request,
                 (GET) (/) => {
                     // If the request's URL is `/`, we jump here.
