@@ -17,7 +17,7 @@ fn main() {
                     p { "Hi, " (name) "!" }
                 };
                 println!("{}", markup.into_string());
-                
+                Response::html("hello world");
             },
             _ => Response::empty_404()
         )
