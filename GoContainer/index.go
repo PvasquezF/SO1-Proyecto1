@@ -89,7 +89,7 @@ func showPage(w http.ResponseWriter, r *http.Request) {
 
 func initialize() *redisClient {
 	c := redis.NewClient(&redis.Options{
-		Addr: "35.208.144.20:6379",
+		Addr: "35.208.41.153:6379",
 	})
 
 	if err := c.Ping().Err(); err != nil {
