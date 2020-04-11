@@ -7,10 +7,12 @@ extern crate serde_json;
 
 use std::collections::HashMap;
 use rouille::Response;
+use rouille::Router;
+use rouille::router;
 use serde_json::value::{to_value, Value};
 use std::error::Error;
 use tera::{Context, Result, Tera};
-use router::Router;
+
 lazy_static! {
     pub static ref TEMPLATES: Tera = {
         let mut tera = match Tera::new("templates/**/*") {
