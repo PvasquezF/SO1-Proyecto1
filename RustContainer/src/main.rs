@@ -41,7 +41,7 @@ fn main() {
     // A one off template
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
-    let res = ""
+    let mut res = "".to_string();
     match TEMPLATES.render("users/profile.html", &context) {
         Ok(s) => res = res + s,
         Err(e) => {
