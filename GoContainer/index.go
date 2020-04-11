@@ -42,8 +42,8 @@ type CPU struct {
 
 // TodoPage struct
 type TodoPage struct {
-	Times   [100]string
-	Values  [100]string
+	Times   [1000]string
+	Values  [1000]string
 	Valores string
 	Tiempos string
 	Index   int
