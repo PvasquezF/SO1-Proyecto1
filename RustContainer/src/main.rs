@@ -41,9 +41,9 @@ fn main() {
     // A one off template
     Tera::one_off("hello", &Context::new(), true).unwrap();
 
-    let mut res = "".to_string();
     match TEMPLATES.render("users/profile.html", &context) {
-        Ok(s) => res = res + s,
+        let res = "".to_string();
+        Ok(s) => { res.push_str(&s); println!("{:?}", s)},
         Err(e) => {
             println!("Error: {}", e);
             let mut cause = e.source();
@@ -53,7 +53,19 @@ fn main() {
             }
         }
     };
-            rouille::start_server("0.0.0.0:8888", move |_request| {
-                Response::html(res)
-            });
+
+    rouille::start_server("0.0.0.0:8888", move|_request|{
+            match handler(&request, &pool){
+                Ok(response)=> {response},
+                Err(err) => {
+                    Response::text(err.to_string())
+                        .with_status_code(500)
+                }
+            }
+       // Response::html(&res);
+    });
+
+    (GET) (/) =>{
+        Response::text("Users")
+    },
 }
