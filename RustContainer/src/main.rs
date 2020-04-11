@@ -2,7 +2,7 @@
 #![feature(use_extern_macros)]
 #![feature(proc_macro_hygiene)]
 extern crate maud;
-#[macro_use] extern crate rouille;
+extern crate rouille;
 
 use maud::html;
 use rouille::Response;
