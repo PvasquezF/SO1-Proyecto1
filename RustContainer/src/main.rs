@@ -60,6 +60,7 @@ fn main() -> Result<(), Error>{
 fn save(red: RedisData) -> redis::RedisResult<()> {
     let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
+    println!("{:?}", red.Valor);
     let _ : () = con.lpush("cpu", red.Valor)?;
     Ok(())
 }
