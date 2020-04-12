@@ -1,4 +1,5 @@
-
+#![feature(use_extern_macros)]
+#![feature(proc_macro_hygiene)]
 extern crate maud;
 extern crate rouille;
 extern crate redis;
