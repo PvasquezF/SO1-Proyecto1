@@ -9,6 +9,10 @@ use rouille::Response;
 use rouille::router;
 use std::env;
 use std::fs;
+use futures::{Future, Stream};
+use reqwest::r#async::{Client, Decoder};
+use std::mem;
+
 // use reqwest::r#async::{Client, Decoder};
 
 fn main() {
