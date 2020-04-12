@@ -9,4 +9,4 @@ FROM gcr.io/distroless/cc
 COPY --from=build-env /app/target/release/pavel /
 COPY --from=build-env /app/Template/ /Template/
 EXPOSE 8888
-CMD ["./hello-rocket"]
+CMD ["./pavel"]
