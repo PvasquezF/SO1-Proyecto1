@@ -40,6 +40,7 @@ fn main() -> Result<(), Error>{
     let data: Data = response.json()?;
     let utc: DateTime<Utc> = Utc::now();
     let redisSend: RedisData = RedisData{Valor: data.cpu.read.to_string(), Tiempo: utc.format("%Y-%m-%d %H:%M:%S").to_string()};
+    
     println!("{:?}", redisSend);
     save(redisSend);
     rouille::start_server("0.0.0.0:8888", move |request| {
@@ -59,7 +60,7 @@ fn main() -> Result<(), Error>{
 fn save(red: RedisData) -> redis::RedisResult<()> {
     let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
-    let _ : () = con.lpush("cpu", red)?;
+    let _ : () = con.lpush("cpu", red.Valor)?;
     Ok(())
 }
 
