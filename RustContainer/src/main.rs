@@ -1,3 +1,9 @@
+#[macro_use]
+extern crate serde;
+extern crate serde_derive;
+extern crate reqwest;
+use reqwest::Error;
+
 extern crate rouille;
 extern crate redis;
 
@@ -9,6 +15,15 @@ use std::fs;
 // use reqwest::r#async::{Client, Decoder};
 
 fn main() {
+    let request_url = format!("https://api.github.com/repos/{owner}/{repo}/stargazers",
+                              owner = "rust-lang-nursery",
+                              repo = "rust-cookbook");
+    println!("{}", request_url);
+    let mut response = reqwest::get(&request_url)?;
+
+    let users: Vec<User> = response.json()?;
+    println!("{:?}", users);
+    Ok(())
     rouille::start_server("0.0.0.0:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
