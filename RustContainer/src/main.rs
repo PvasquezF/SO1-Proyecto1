@@ -24,7 +24,7 @@ fn main() {
                 //.await?;
 //
                 //println!("body = {:?}", body);
-                return Response::html(contents.into_string());
+                return Response::html(contents);
             },
             _ => Response::empty_404()
         )
