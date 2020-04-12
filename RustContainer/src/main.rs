@@ -1,5 +1,4 @@
-#![feature(use_extern_macros)]
-#![feature(proc_macro_hygiene)]
+
 extern crate maud;
 extern crate rouille;
 extern crate redis;
@@ -7,11 +6,6 @@ extern crate redis;
 use maud::html;
 use rouille::Response;
 use rouille::router;
-use std::env;
-use std::fs;
-use futures::{Future, Stream};
-use reqwest::r#async::{Client, Decoder};
-use std::mem;
 
 // use reqwest::r#async::{Client, Decoder};
 
