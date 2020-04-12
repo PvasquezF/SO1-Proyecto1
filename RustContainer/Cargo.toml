@@ -9,6 +9,6 @@ rouille = "3.0.0"
 reqwest = "0.9.14"
 tokio = "0.1.18"
 futures = "0.1.21"
-serde = "1"
+serde = { version = "1.0", features = ["derive"] }
 [dependencies.redis]
 version = "*"
