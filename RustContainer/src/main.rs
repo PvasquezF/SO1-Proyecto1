@@ -14,20 +14,17 @@ use std::fs;
 
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
-struct User {
-    login: String,
-    id: u32,
+struct Cpu {
+    read: u32
 }
 
 fn main() -> Result<(), Error>{
-    let request_url = format!("https://api.github.com/repos/{owner}/{repo}/stargazers",
-                              owner = "rust-lang-nursery",
-                              repo = "rust-cookbook");
+    let request_url = format!("http://35.208.41.153:8080");
     println!("{}", request_url);
     let mut response = reqwest::get(&request_url)?;
 
-    let users: Vec<User> = response.json()?;
-    println!("{:?}", users);
+    let cpu: Vec<Cpu> = response.json()?;
+    println!("{:?}", cpu);
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
     //         (GET) (/{name: String}) => {
