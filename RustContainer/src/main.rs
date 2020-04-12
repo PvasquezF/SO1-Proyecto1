@@ -35,11 +35,10 @@ struct RedisData{
 }
 
 fn main() -> Result<(), Error>{
-    let tick = schedule_recv::periodic_ms(1000);
+    let tick = schedule_recv::periodic_ms(5000);
     
     loop {
         tick.recv().unwrap();
-        println!("{} cycle", time::now().strftime("%Y-%m-%d %H:%M:%S.%f").unwrap());
         let request_url = format!("http://35.208.41.153:8080");
         let mut response = reqwest::get(&request_url)?;
         
