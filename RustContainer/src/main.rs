@@ -21,7 +21,7 @@ fn main() {
                 };
 
                 println!("With text:\n{}", contents);
-                return Response::html(markup.into_string());
+                return Response::html(contents.into_string());
             },
             _ => Response::empty_404()
         )
