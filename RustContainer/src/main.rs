@@ -31,12 +31,12 @@ fn main() {
     });
 }
 
-fn do_something() -> redis::RedisResult<()> {
-    let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
-    let mut con = client.get_connection()?;
-
-    let _ : () = con.lpush("cpu",val)?;
-    /* do something here */
-
-    Ok(())
-}
+// fn do_something() -> redis::RedisResult<()> {
+//     let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
+//     let mut con = client.get_connection()?;
+// 
+//     let _ : () = con.lpush("cpu",val)?;
+//     /* do something here */
+// 
+//     Ok(())
+// }
