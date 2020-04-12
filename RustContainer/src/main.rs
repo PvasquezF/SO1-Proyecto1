@@ -8,7 +8,7 @@ use rouille::Response;
 use rouille::router;
 
 fn main() {
-    rouille::start_server("localhost:8888", move |request| {
+    rouille::start_server("0.0.0.0:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
                 let name = "Lyra";
