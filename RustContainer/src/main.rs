@@ -30,6 +30,7 @@ fn main() -> Result<(), Error>{
 
     let data: Data = response.json()?;
     println!("{:?}", data);
+    println!("{:?}", data.cpu.read);
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
     //         (GET) (/{name: String}) => {
