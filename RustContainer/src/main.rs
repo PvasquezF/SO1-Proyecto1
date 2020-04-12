@@ -27,7 +27,6 @@ struct Cpu {
     read: f64
 }
 
-#[derive(Serialize, Debug)]
 struct RedisData{
 	Valor:  String,
 	Tiempo: String
