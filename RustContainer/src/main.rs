@@ -18,6 +18,7 @@ struct Data {
     cpu: Cpu
 }
 
+#[derive(Deserialize, Debug)]
 struct Cpu {
     read: u32
 }
