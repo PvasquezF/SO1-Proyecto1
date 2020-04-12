@@ -27,6 +27,7 @@ struct Cpu {
     read: f64
 }
 
+#[derive(Serialize, Debug)]
 struct RedisData{
 	Valor:  String,
 	Tiempo: String
@@ -61,16 +62,4 @@ fn save(red: RedisData) -> redis::RedisResult<()> {
     let mut con = client.get_connection()?;
     let _ : () = con.lpush("cpu", red.Valor)?;
     Ok(())
-}
-
-impl Serialize for RedisData {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut state = serializer.serialize_struct("RedisData", 2)?;
-        state.serialize_field("Valor", &self.Valor)?;
-        state.serialize_field("Tiempo", &self.Tiempo)?;
-        state.end()
-    }
 }
