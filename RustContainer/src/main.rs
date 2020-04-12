@@ -44,7 +44,7 @@ fn main() {
                 return Response::html(contents);
             },
             _ => Response::empty_404()
-        )
+        );
         th();
     });
 }
