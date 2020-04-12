@@ -20,7 +20,7 @@ struct Data {
 
 #[derive(Deserialize, Debug)]
 struct Cpu {
-    read: u32
+    read: f64
 }
 
 fn main() -> Result<(), Error>{
