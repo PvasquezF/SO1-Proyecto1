@@ -75,7 +75,7 @@ func GetData(w http.ResponseWriter, r *http.Request) {
 		read}
 
 	w.Header().Set("Content-Type", "application/json")
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	d := Data{Os: runtimeOS, HostName: hostStat.Hostname, Platform: hostStat.Platform, Ram: ram, Cpu: cpu}
 	json.NewEncoder(w).Encode(d)
 }
