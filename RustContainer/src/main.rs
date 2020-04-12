@@ -14,7 +14,7 @@ use std::env;
 use std::fs;
 use chrono::prelude::*;
 use redis::Commands;
-
+use serialize::{Decodable, Encodable, json};
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
 struct Data {
@@ -58,6 +58,6 @@ fn main() -> Result<(), Error>{
 fn save(red: RedisData) -> redis::RedisResult<()> {
     let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
-    let _ : () = con.lpush("cpu",red)?;
+    let _ : () = con.lpush("cpu",, json::encode(red))?;
     Ok(())
 }
