@@ -3,16 +3,21 @@
 
 <head>
     <title>Golang!</title>
-    <script src="./Chart.min.js"></script>
-    <script src="./utils.js"></script>
-    <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
     <style>
         canvas {
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
+        }
+        
+        .canvas-container {
+            text-align: center;
+            margin: auto;
         }
     </style>
 </head>
@@ -25,6 +30,12 @@
     <br>
     <br>
     <script>
+        $.ajax({
+            url: "35.208.41.153:8080",
+            context: document.body
+        }).done(function() {
+            $(this).addClass("done");
+        });
         var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         var config = {
             type: 'line',
@@ -32,8 +43,8 @@
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
                     label: 'Porcentaje de uso',
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
+                    backgroundColor: "#000000",
+                    borderColor: "#000000",
                     data: [
                         10, 20, 30, 40, 50, 60
                     ],
