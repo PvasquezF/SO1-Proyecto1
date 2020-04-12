@@ -14,6 +14,10 @@ use std::fs;
 
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
+struct Data {
+    cpu: Cpu
+}
+
 struct Cpu {
     read: u32
 }
@@ -23,8 +27,8 @@ fn main() -> Result<(), Error>{
     println!("{}", request_url);
     let mut response = reqwest::get(&request_url)?;
 
-    let cpu: Vec<Cpu> = response.json()?;
-    println!("{:?}", cpu);
+    let data: Vec<Data> = response.json()?;
+    println!("{:?}", data);
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
     //         (GET) (/{name: String}) => {
