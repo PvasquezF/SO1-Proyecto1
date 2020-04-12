@@ -43,17 +43,17 @@ fn main() -> Result<(), Error>{
     
     println!("{:?}", redisSend);
     save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string()).expect("Error");
-    rouille::start_server("0.0.0.0:8888", move |request| {
-        router!(request,
-            (GET) (/{name: String}) => {
-                let name = "Lyra";
-                let contents = fs::read_to_string("Template/index.html")
-                .expect("Something went wrong reading the file");
-                return Response::html(contents);
-            },
-            _ => Response::empty_404()
-        )
-    });
+    // rouille::start_server("0.0.0.0:8888", move |request| {
+    //     router!(request,
+    //         (GET) (/{name: String}) => {
+    //             let name = "Lyra";
+    //             let contents = fs::read_to_string("Template/index.html")
+    //             .expect("Something went wrong reading the file");
+    //             return Response::html(contents);
+    //         },
+    //         _ => Response::empty_404()
+    //     )
+    // });
     Ok(())
 }
 
