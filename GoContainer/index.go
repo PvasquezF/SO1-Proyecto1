@@ -26,8 +26,8 @@ type Data struct {
 
 // RAM struct
 type RAM struct {
-	Total string `json:"total"`
-	Usage int64  `json:"usage"`
+	Total string  `json:"total"`
+	Usage float64 `json:"usage"`
 }
 
 // CPU struct
@@ -42,8 +42,8 @@ type CPU struct {
 
 // TodoPage struct
 type TodoPage struct {
-	Times   [100]string
-	Values  [100]string
+	Times   [1000]string
+	Values  [1000]string
 	Valores string
 	Tiempos string
 	Index   int
@@ -69,7 +69,7 @@ func showPage(w http.ResponseWriter, r *http.Request) {
 	tmpl, _ := template.ParseFiles("layout.html")
 	responseObject := getData()
 	v1 := time.Now().Format("01-02-2006 15:04:05")
-	v2 := strconv.FormatInt(responseObject.Ram.Usage, 10)
+	v2 := strconv.FormatFloat(responseObject.Ram.Usage, 'E', -1, 64)
 	data.Times[index] = v1
 	data.Values[index] = v2
 	index = index + 1
@@ -79,6 +79,7 @@ func showPage(w http.ResponseWriter, r *http.Request) {
 
 	redisClient := initialize()
 	key1 := "ram"
+	print(responseObject.Ram.Usage)
 	value1 := RedisData{Valor: v2, Tiempo: v1}
 	err := redisClient.setKey(key1, value1, time.Minute*1)
 	if err != nil {
@@ -112,7 +113,7 @@ func (client *redisClient) setKey(key string, value interface{}, expiration time
 }
 
 func getData() Data {
-	response, err := http.Get("http://localhost:8080/")
+	response, err := http.Get("http://35.208.41.153:8080/")
 
 	if err != nil {
 		fmt.Print(err.Error())
