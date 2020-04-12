@@ -14,12 +14,11 @@ fn main() {
         router!(request,
             (GET) (/{name: String}) => {
                 let name = "Lyra";
-                let markup = html! {
-                    p { "Hi, " (name) "!" }
-                };
                 let contents = fs::read_to_string("templates/base.html")
                 .expect("Something went wrong reading the file");
-
+                let markup = html! {
+                    contents
+                };
                 println!("With text:\n{}", contents);
                 return Response::html(markup.into_string());
             },
