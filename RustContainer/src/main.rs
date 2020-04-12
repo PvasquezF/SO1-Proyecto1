@@ -36,7 +36,7 @@ struct RedisData{
 
 fn main() -> Result<(), Error> {
     let tick = schedule_recv::periodic_ms(5000);
-    let index = 0;
+    let mut index = 0;
     loop {
         if(index == 0){
             server();
