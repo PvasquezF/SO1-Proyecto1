@@ -58,7 +58,7 @@ fn main() -> Result<(), Error>{
 }
 
 fn save(Valor: String, Tiempo: String) -> redis::RedisResult<()> {
-    let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
+    let client = redis::Client::open("redis://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
     println!("{:?}", Valor);
     let _ : () = con.lpush("cpu", Valor)?;
