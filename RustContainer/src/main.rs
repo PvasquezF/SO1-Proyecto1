@@ -28,7 +28,6 @@ fn main() -> Result<(), Error>{
 
     let users: Vec<User> = response.json()?;
     println!("{:?}", users);
-    Ok(());
     rouille::start_server("0.0.0.0:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
@@ -39,13 +38,14 @@ fn main() -> Result<(), Error>{
                 //.await?
                 //.text()
                 //.await?;
-//
+                //
                 //println!("body = {:?}", body);
                 return Response::html(contents);
             },
             _ => Response::empty_404()
         )
     });
+    Ok(())
 }
 
 // fn do_something() -> redis::RedisResult<()> {
