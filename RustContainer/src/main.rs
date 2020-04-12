@@ -27,9 +27,10 @@ struct Cpu {
 
 #[derive(Serialize, Debug)]
 struct RedisData{
-	Valor  String,
-	Tiempo String
+	Valor:  String,
+	Tiempo: String
 }
+
 fn main() -> Result<(), Error>{
     let request_url = format!("http://35.208.41.153:8080");
     println!("{}", request_url);
