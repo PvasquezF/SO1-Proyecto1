@@ -28,23 +28,23 @@ fn main() -> Result<(), Error>{
 
     let users: Vec<User> = response.json()?;
     println!("{:?}", users);
-    rouille::start_server("0.0.0.0:8888", move |request| {
-        router!(request,
-            (GET) (/{name: String}) => {
-                let name = "Lyra";
-                let contents = fs::read_to_string("Template/index.html")
-                .expect("Something went wrong reading the file");
-                //let body = reqwest::get("http://35.208.41.153:8080")
-                //.await?
-                //.text()
-                //.await?;
-                //
-                //println!("body = {:?}", body);
-                return Response::html(contents);
-            },
-            _ => Response::empty_404()
-        )
-    });
+    // rouille::start_server("0.0.0.0:8888", move |request| {
+    //     router!(request,
+    //         (GET) (/{name: String}) => {
+    //             let name = "Lyra";
+    //             let contents = fs::read_to_string("Template/index.html")
+    //             .expect("Something went wrong reading the file");
+    //             //let body = reqwest::get("http://35.208.41.153:8080")
+    //             //.await?
+    //             //.text()
+    //             //.await?;
+    //             //
+    //             //println!("body = {:?}", body);
+    //             return Response::html(contents);
+    //         },
+    //         _ => Response::empty_404()
+    //     )
+    // });
     Ok(())
 }
 
