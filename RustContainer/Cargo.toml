@@ -50,3 +50,6 @@ preserve_order = ["serde_json/preserve_order"]
 
 [badges]
 maintenance = { status = "actively-developed" }
+
+[dependencies.redis]
+version = "*"

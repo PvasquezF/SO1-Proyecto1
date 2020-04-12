@@ -2,12 +2,11 @@
 <html>
 
 <head>
-    <title>Golang!</title>
+    <title>Rust!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <style>
         canvas {
@@ -25,30 +24,24 @@
 
 <body>
     <div class='canvas-container' style='width:75%;'>
-        <h1>Golang container</h1>
+        <h1>Rust container</h1>
         <canvas id="canvas"></canvas>
     </div>
     <br>
     <br>
     <script>
-        $.ajax({
-            url: "http://35.208.41.153:8080",
-            type: "get"
-        }).done(function(res) {
-            console.log(res)
-        });
-        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        let porcentajes = [];
+        let horas = [];
+        var MONTHS = horas;
         var config = {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: horas,
                 datasets: [{
                     label: 'Porcentaje de uso',
                     backgroundColor: "#000000",
                     borderColor: "#000000",
-                    data: [
-                        10, 20, 30, 40, 50, 60
-                    ],
+                    data: porcentajes,
                     fill: false,
                 }]
             },
@@ -56,7 +49,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Grafica de memoria RAM'
+                    text: 'Grafica de CPU'
                 },
                 tooltips: {
                     mode: 'index',
@@ -78,17 +71,44 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Ram %'
+                            labelString: 'Cpu %'
                         }
                     }]
                 }
             }
         };
 
-        window.onload = function() {
+        $.ajax({
+            url: "http://35.208.41.153:8080",
+            type: "get"
+        }).done(function(res) {
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date + ' ' + time;
+            porcentajes.push(res.cpu.read);
+            horas.push(dateTime);
+            console.log(res)
+        }).always(() => {
             var ctx = document.getElementById('canvas').getContext('2d');
             window.myLine = new Chart(ctx, config);
-        };
+        });
+        setInterval(function() {
+            $.ajax({
+                url: "http://35.208.41.153:8080",
+                type: "get"
+            }).done(function(res) {
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                var dateTime = date + ' ' + time;
+                porcentajes.push(res.cpu.read);
+                horas.push(dateTime);
+            }).always(() => {
+                var ctx = document.getElementById('canvas').getContext('2d');
+                window.myLine = new Chart(ctx, config);
+            });
+        }, 5000);
     </script>
 </body>
 
