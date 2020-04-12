@@ -19,7 +19,7 @@ struct User {
     id: u32,
 }
 
-fn main() {
+fn main() -> Result<(), Error>{
     let request_url = format!("https://api.github.com/repos/{owner}/{repo}/stargazers",
                               owner = "rust-lang-nursery",
                               repo = "rust-cookbook");
