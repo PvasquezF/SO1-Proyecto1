@@ -28,7 +28,7 @@ fn main() -> Result<(), Error>{
     println!("{}", request_url);
     let mut response = reqwest::get(&request_url)?;
 
-    let data: Vec<Data> = response.json()?;
+    let data: Data = response.json()?;
     println!("{:?}", data);
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
