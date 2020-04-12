@@ -36,7 +36,6 @@ struct RedisData{
 
 fn main() {
     rouille::start_server("0.0.0.0:8888", move |request| {
-        th();
         router!(request,
             (GET) (/{name: String}) => {
                 let name = "Lyra";
@@ -46,6 +45,7 @@ fn main() {
             },
             _ => Response::empty_404()
         )
+        th();
     });
 }
 
