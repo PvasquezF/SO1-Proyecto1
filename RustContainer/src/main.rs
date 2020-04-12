@@ -9,7 +9,7 @@ use rouille::Response;
 use rouille::router;
 use std::env;
 use std::fs;
-use reqwest::r#async::{Client, Decoder};
+// use reqwest::r#async::{Client, Decoder};
 
 fn main() {
     rouille::start_server("0.0.0.0:8888", move |request| {
