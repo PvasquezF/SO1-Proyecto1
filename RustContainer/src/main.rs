@@ -40,7 +40,7 @@ fn main() -> Result<(), Error>{
     println!("{:?}", data);
     println!("{:?}", data.cpu.read);
     let utc: DateTime<Utc> = Utc::now();
-    println!("{:?}", utc);
+    println!("{:?}", utc.format("%Y-%m-%d %H:%M:%S").to_string());
     
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
