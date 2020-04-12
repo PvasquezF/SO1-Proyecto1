@@ -2,6 +2,7 @@
 extern crate serde;
 extern crate serde_derive;
 extern crate reqwest;
+extern crate chrono;
 use reqwest::Error;
 
 extern crate rouille;
@@ -11,6 +12,7 @@ use rouille::Response;
 use rouille::router;
 use std::env;
 use std::fs;
+use chrono::prelude::*;
 
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
@@ -23,6 +25,11 @@ struct Cpu {
     read: f64
 }
 
+#[derive(Serialize, Debug)]
+struct RedisData{
+	Valor  String,
+	Tiempo String
+}
 fn main() -> Result<(), Error>{
     let request_url = format!("http://35.208.41.153:8080");
     println!("{}", request_url);
@@ -31,6 +38,9 @@ fn main() -> Result<(), Error>{
     let data: Data = response.json()?;
     println!("{:?}", data);
     println!("{:?}", data.cpu.read);
+    let utc: DateTime<Utc> = Utc::now();
+    println!("{:?}", utc);
+    
     // rouille::start_server("0.0.0.0:8888", move |request| {
     //     router!(request,
     //         (GET) (/{name: String}) => {
