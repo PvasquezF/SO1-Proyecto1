@@ -23,7 +23,7 @@ fn main() {
 
     let users: Vec<User> = response.json()?;
     println!("{:?}", users);
-    Ok(())
+    Ok(());
     rouille::start_server("0.0.0.0:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
