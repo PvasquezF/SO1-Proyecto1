@@ -16,6 +16,7 @@ use std::fs;
 use chrono::prelude::*;
 use redis::Commands;
 use serde::ser::{Serialize, Serializer, SerializeStruct};
+use std::thread;
 
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
@@ -35,13 +36,12 @@ struct RedisData{
 }
 
 fn main() -> Result<(), Error> {
+    thread::spawn(|| {
+        server();
+    });
     let tick = schedule_recv::periodic_ms(5000);
     let mut index = 0;
     loop {
-        if(index == 0){
-            server();
-            index = -1;
-        }
         tick.recv().unwrap();
         let request_url = format!("http://35.208.41.153:8080");
         let mut response = reqwest::get(&request_url)?;
