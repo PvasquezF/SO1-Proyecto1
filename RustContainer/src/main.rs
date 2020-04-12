@@ -13,6 +13,7 @@ use rouille::router;
 use std::env;
 use std::fs;
 use chrono::prelude::*;
+use redis::Commands;
 
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
