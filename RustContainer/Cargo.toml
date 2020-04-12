@@ -12,6 +12,7 @@ categories = ["template-engine"]
 edition = "2018"
 
 [dependencies]
+schedule_recv = "0.1.0"
 openssl-sys = "0.9.29"
 rouille = "3.0.0"
 reqwest = "0.9.14"
