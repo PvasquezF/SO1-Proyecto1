@@ -3,9 +3,9 @@
 
 <head>
     <title>Golang!</title>
-    <script src="static/Chart.min.js"></script>
-    <script src="static/utils.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <script src="./Chart.min.js"></script>
+    <script src="./utils.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
@@ -24,29 +24,19 @@
     </div>
     <br>
     <br>
-    <input style="display: none;" id="tiempos" value="{{.Tiempos}}"></input>
-    <input style="display: none;" id="valores" value="{{.Valores}}"></input>
-    <input style="display: none;" id="index" value="{{.Index}}"></input>
-
     <script>
-        setTimeout(function() {
-            window.location.reload(1);
-        }, 5000);
-        let porcentajes = document.getElementById('valores').value.split(',');
-        let horas = document.getElementById('tiempos').value.split(',');
-        let index = document.getElementById('index').value;
-        porcentajes = porcentajes.splice(0, index);
-        horas = horas.splice(0, index);
-        var MONTHS = horas;
+        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         var config = {
             type: 'line',
             data: {
-                labels: horas,
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
                     label: 'Porcentaje de uso',
                     backgroundColor: window.chartColors.red,
                     borderColor: window.chartColors.red,
-                    data: porcentajes,
+                    data: [
+                        10, 20, 30, 40, 50, 60
+                    ],
                     fill: false,
                 }]
             },
@@ -82,6 +72,7 @@
                 }
             }
         };
+
         window.onload = function() {
             var ctx = document.getElementById('canvas').getContext('2d');
             window.myLine = new Chart(ctx, config);

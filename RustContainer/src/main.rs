@@ -14,10 +14,10 @@ fn main() {
         router!(request,
             (GET) (/{name: String}) => {
                 let name = "Lyra";
-                let contents = fs::read_to_string("templates/base.html")
+                let contents = fs::read_to_string("Template/index.html")
                 .expect("Something went wrong reading the file");
                 let markup = html! {
-                    contents
+                    (contents)
                 };
 
                 println!("With text:\n{}", contents);
