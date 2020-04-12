@@ -34,20 +34,9 @@ struct RedisData{
 	Tiempo: String
 }
 
-fn main() -> Result<(), Error>{
-    let tick = schedule_recv::periodic_ms(5000);
+fn main() {
     rouille::start_server("0.0.0.0:8888", move |request| {
-        loop {
-            tick.recv().unwrap();
-            let request_url = format!("http://35.208.41.153:8080");
-            let mut response = reqwest::get(&request_url)?;
-            
-            let data: Data = response.json()?;
-            let utc: DateTime<Utc> = Utc::now();
-            let redisSend: RedisData = RedisData{Valor: data.cpu.read.to_string(), Tiempo: utc.format("%Y-%m-%d %H:%M:%S").to_string()};   
-            println!("{:?}", redisSend);
-            save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string()).expect("Error");
-        }
+        th();
         router!(request,
             (GET) (/{name: String}) => {
                 let name = "Lyra";
@@ -58,6 +47,22 @@ fn main() -> Result<(), Error>{
             _ => Response::empty_404()
         )
     });
+}
+
+fn th() -> Result<(), Error>{
+    let tick = schedule_recv::periodic_ms(5000);
+    loop {
+        tick.recv().unwrap();
+        let request_url = format!("http://35.208.41.153:8080");
+        let mut response = reqwest::get(&request_url)?;
+        
+        let data: Data = response.json()?;
+        let utc: DateTime<Utc> = Utc::now();
+        let redisSend: RedisData = RedisData{Valor: data.cpu.read.to_string(), Tiempo: utc.format("%Y-%m-%d %H:%M:%S").to_string()};   
+        println!("{:?}", redisSend);
+        save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string()).expect("Error");
+    }
+    Ok(())
 }
 
 fn save(Valor: String, Tiempo: String) -> redis::RedisResult<()> {
