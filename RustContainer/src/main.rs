@@ -58,11 +58,11 @@ fn main() -> Result<(), Error>{
             _ => Response::empty_404()
         )
     });
-    Ok(())
 }
 
 fn save(Valor: String, Tiempo: String) -> redis::RedisResult<()> {
     let client = redis::Client::open("redis://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
     let _ : () = con.lpush("cpu", format!("{}|{}", Valor, Tiempo))?;
+    Ok(())
 }
