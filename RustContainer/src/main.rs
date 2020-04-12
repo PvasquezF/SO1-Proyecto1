@@ -13,6 +13,11 @@ use std::env;
 use std::fs;
 
 // use reqwest::r#async::{Client, Decoder};
+#[derive(Deserialize, Debug)]
+struct User {
+    login: String,
+    id: u32,
+}
 
 fn main() {
     let request_url = format!("https://api.github.com/repos/{owner}/{repo}/stargazers",
