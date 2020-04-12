@@ -17,7 +17,7 @@ fn main() {
                 let contents = fs::read_to_string("templates/base.html")
                 .expect("Something went wrong reading the file");
                 let markup = html! {
-                    contents.into_string()
+                    contents
                 };
 
                 println!("With text:\n{}", contents);
