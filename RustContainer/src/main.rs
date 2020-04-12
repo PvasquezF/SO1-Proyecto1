@@ -35,20 +35,13 @@ struct RedisData{
 }
 
 fn main() -> Result<(), Error> {
-    rouille::start_server("0.0.0.0:8888", move |request| {
-        router!(request,
-            (GET) (/{name: String}) => {
-                let name = "Lyra";
-                let contents = fs::read_to_string("Template/index.html")
-                .expect("Something went wrong reading the file");
-                Response::html(contents);
-            },
-            _ => Response::empty_404()
-        );
-    });
-    
     let tick = schedule_recv::periodic_ms(5000);
+    let index = 0;
     loop {
+        if(index == 0){
+            server();
+            index = -1;
+        }
         tick.recv().unwrap();
         let request_url = format!("http://35.208.41.153:8080");
         let mut response = reqwest::get(&request_url)?;
@@ -60,6 +53,20 @@ fn main() -> Result<(), Error> {
         save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string()).expect("Error");
     }
     Ok(())
+}
+
+fn server() {
+    rouille::start_server("0.0.0.0:8888", move |request| {
+        router!(request,
+            (GET) (/{name: String}) => {
+                let name = "Lyra";
+                let contents = fs::read_to_string("Template/index.html")
+                .expect("Something went wrong reading the file");
+                return Response::html(contents);
+            },
+            _ => Response::empty_404()
+        );
+    });
 }
 
 fn save(Valor: String, Tiempo: String) -> redis::RedisResult<()> {
