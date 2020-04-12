@@ -46,6 +46,7 @@ fn main() {
             _ => Response::empty_404()
         );
         th();
+        Ok(());
     });
 }
 
