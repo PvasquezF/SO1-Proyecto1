@@ -18,12 +18,12 @@ fn main() {
                 let name = "Lyra";
                 let contents = fs::read_to_string("Template/index.html")
                 .expect("Something went wrong reading the file");
-                let body = reqwest::get("http://35.208.41.153:8080")
-                .await?
-                .text()
-                .await?;
-
-                println!("body = {:?}", body);
+                //let body = reqwest::get("http://35.208.41.153:8080")
+                //.await?
+                //.text()
+                //.await?;
+//
+                //println!("body = {:?}", body);
                 return Response::html(contents.into_string());
             },
             _ => Response::empty_404()
