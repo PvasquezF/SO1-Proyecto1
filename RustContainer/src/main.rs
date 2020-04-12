@@ -1,9 +1,11 @@
-
 extern crate rouille;
 extern crate redis;
 
+use maud::html;
 use rouille::Response;
 use rouille::router;
+use std::env;
+use std::fs;
 
 // use reqwest::r#async::{Client, Decoder};
 
