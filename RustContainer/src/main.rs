@@ -3,7 +3,6 @@ extern crate serde;
 extern crate serde_derive;
 extern crate reqwest;
 extern crate chrono;
-extern crate serialize;
 use reqwest::Error;
 
 extern crate rouille;
@@ -15,7 +14,8 @@ use std::env;
 use std::fs;
 use chrono::prelude::*;
 use redis::Commands;
-use serialize::{Decodable, Encodable, json};
+use serde::ser::{Serialize, Serializer, SerializeStruct};
+
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
 struct Data {
@@ -59,6 +59,18 @@ fn main() -> Result<(), Error>{
 fn save(red: RedisData) -> redis::RedisResult<()> {
     let client = redis::Client::open("redis://http://35.208.41.153:6379")?;
     let mut con = client.get_connection()?;
-    let _ : () = con.lpush("cpu", json::encode(red))?;
+    let _ : () = con.lpush("cpu", red)?;
     Ok(())
+}
+
+impl Serialize for RedisData {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut state = serializer.serialize_struct("RedisData", 2)?;
+        state.serialize_field("Valor", &self.Valor)?;
+        state.serialize_field("Tiempo", &self.Tiempo)?;
+        state.end()
+    }
 }
