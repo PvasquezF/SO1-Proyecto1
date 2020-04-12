@@ -64,8 +64,8 @@ fn server() {
                 .expect("Something went wrong reading the file");
                 return Response::html(contents);
             },
-            _ => Response::empty_404()
-        );
+            _ => return Response::empty_404()
+        )
     });
 }
 
