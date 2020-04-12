@@ -15,7 +15,8 @@ use std::fs;
 // use reqwest::r#async::{Client, Decoder};
 #[derive(Deserialize, Debug)]
 struct Data {
-    cpu: Cpu
+    cpu: Cpu,
+    read: f64
 }
 
 #[derive(Deserialize, Debug)]
