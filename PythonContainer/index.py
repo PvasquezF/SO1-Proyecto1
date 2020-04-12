@@ -13,8 +13,8 @@ def hello_world():
     for i in p:
         tupla = str(i).split('|')
         print(tupla)
-        valor = tupla[0]
-        tiempo = tupla[1]
+        valor = tupla[0].replace('b\'','')
+        tiempo = tupla[1].replace('\'','')
         dataCpu = {"valor": valor,
                     "tiempo": tiempo}
         cpuarray.append(dataCpu)
