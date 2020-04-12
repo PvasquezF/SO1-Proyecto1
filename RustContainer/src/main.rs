@@ -42,7 +42,7 @@ fn main() -> Result<(), Error>{
     let redisSend: RedisData = RedisData{Valor: data.cpu.read.to_string(), Tiempo: utc.format("%Y-%m-%d %H:%M:%S").to_string()};
     
     println!("{:?}", redisSend);
-    save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string());
+    save(data.cpu.read.to_string(), utc.format("%Y-%m-%d %H:%M:%S").to_string()).expect("Error");
     rouille::start_server("0.0.0.0:8888", move |request| {
         router!(request,
             (GET) (/{name: String}) => {
