@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-import requests
 import json
 import redis
 app = Flask(__name__)
@@ -31,4 +30,4 @@ def index():
 if __name__ == '__index__':
     app.run()
 
-app.run(host ='0.0.0.0', port = 5000, debug = false)
+app.run(host ='0.0.0.0', port = 5000)
