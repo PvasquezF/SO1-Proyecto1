@@ -12,5 +12,4 @@ FROM gcr.io/distroless/python3-debian10
 COPY --from=build-venv /venv /venv
 COPY . /app
 WORKDIR /app
-RUN ls
 ENTRYPOINT ["/venv/bin/python3", "./index.py"]
