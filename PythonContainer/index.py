@@ -31,4 +31,4 @@ def index():
 if __name__ == '__index__':
     app.run()
 
-app.run(host ='0.0.0.0', port = 5000)
+app.run(host ='0.0.0.0', port = 5000, debug = false)
