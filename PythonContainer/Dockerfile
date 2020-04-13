@@ -6,7 +6,6 @@ RUN apt-get update && \
     /venv/bin/pip install --upgrade pip
 
 FROM build AS build-venv
-COPY requirements.txt /requirements.txt
 RUN /venv/bin/pip install --disable-pip-version-check -r redis flask
 
 FROM gcr.io/distroless/python3-debian10
