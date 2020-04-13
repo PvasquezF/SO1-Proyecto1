@@ -28,4 +28,7 @@ def hello_world():
 def index():
     return render_template("index.html")
 
+if __name__ == '__index__':
+    app.run()
+
 app.run(host ='0.0.0.0', port = 5000)
